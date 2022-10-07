@@ -1,0 +1,68 @@
+1. crate a laravel project using CMD commend --- composer create-project laravel/laravel crud
+2. Run the project using CMD command ---- php artisan serve
+3. open Xampp and run mysql and apache
+4. create database cruddb
+5. open .env file from project and set database
+6. Make a table ------- php artisan make:migration crudtable
+7. open crudtable form migration folder
+8. create table atributes-----
+public function up()
+    {
+        Schema::create('users', function (Blueprint $table) {
+            $table->id();
+            $table->string('name');
+            $table->string('email');
+            $table->string('mobile');
+            $table->string('address');
+            $table->timestamps();
+        });
+    }
+
+9. use php artisan migrate
+10. create controller ---- php artisan make:controller studentController --resource
+11. open studentController and create ----
+public function index()
+    {
+        $students = Student::all();
+        return view ('students.index')->with('students', $students);
+    }
+    
+    public function create()
+    {
+        return view('students.create');
+    }
+  
+    public function store(Request $request)
+    {
+        $input = $request->all();
+        Student::create($input);
+        return redirect('student')->with('flash_message', 'Student Addedd!');  
+    }
+    
+    public function show($id)
+    {
+        $student = Student::find($id);
+        return view('students.show')->with('students', $student);
+    }
+    
+    public function edit($id)
+    {
+        $student = Student::find($id);
+        return view('students.edit')->with('students', $student);
+    }
+  
+    public function update(Request $request, $id)
+    {
+        $student = Student::find($id);
+        $input = $request->all();
+        $student->update($input);
+        return redirect('student')->with('flash_message', 'student Updated!');  
+    }
+  
+    public function destroy($id)
+    {
+        Student::destroy($id);
+        return redirect('student')->with('flash_message', 'Student deleted!');  
+    }
+
+12. create a model which is fatch data from databese ---- php artisan make:model Student
