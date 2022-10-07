@@ -21,7 +21,7 @@ class studentController extends Controller
     public function store(Request $request)
     {
         $input = $request->all();
-        Student::create($input);
+        Student::create($input);      
         return redirect('student')->with('flash_message', 'Student Addedd!');  
     }
     
